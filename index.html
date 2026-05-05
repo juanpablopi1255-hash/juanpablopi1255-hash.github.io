@@ -2,71 +2,82 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Clicker Pro</title>
+<title>Clicker</title>
 
 <style>
 body {
-    background: linear-gradient(0deg, #22C1C3 0%, #f068f2 52%, #fdbb2d 100%);
-    margin: 0;
+    background: #22C1C3;
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,104,242,1) 52%, rgba(253,187,45,1) 100%);
+}
+html, body {
     height: 100%;
-    font-family: Arial;
+    margin: 0;
 }
 
-.info {
-    padding: 20px;
-}
-
-.dato {
-    font-size: 18px;
-}
-
-.contenedor {
-    margin-left: 30%;
-    font-size: 30px;
-}
-
-#clicker {
+#clicker{
     width: 200px;
     height: 200px;
     border-radius: 200px;
-    background: #111;
+    background-color: #111;
     border: 2px solid #ccc;
+    box-shadow: 0 0 10px #000;
     cursor: pointer;
 }
-
-#clicker:active {
-    background: #333;
+#clicker:active{
+    background-color: #333;
 }
-
+.contenedor {
+    margin-top: -1%;
+    margin-left: 30%;
+    font-size: 30px;
+    color: black;
+}
 .mejoras {
     position: fixed;
     top: 0;
     right: 0;
-    width: 420px;
+    width: 450px;
     height: 100%;
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,104,242,1) 52%, rgba(253,187,45,1) 100%);
+    border-left: 1px solid #ccc;
+    box-shadow: -1px 0 10px #000;
+    padding: 15px;
     overflow-y: auto;
-    padding: 10px;
-    background: linear-gradient(0deg, #22C1C3, #f068f2, #fdbb2d);
 }
-
-.fila {
-    display: flex;
-    margin-top: 10px;
-}
-
-.mejora {
-    width: 300px;
+.mejora{
+    background-color: rgba(225,222,222,0.25);
+    width: 340px;
+    height: 40px;
+    margin-left: 15px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #000;
+    text-align: left;
+    padding-left: 10px;
     cursor: pointer;
 }
-
-.cantidad {
-    width: 50px;
-    text-align: center;
+.cantidad{
+    background-color: rgba(225,222,222,0.25);
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
-
-button {
-    padding: 8px;
+.fila{
+    display:flex;
 }
+#reiniciar, #ascender{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px;
+    cursor:pointer;
+}
+#ascender{ bottom:80px; }
 </style>
 </head>
 
@@ -86,105 +97,82 @@ button {
 
 <div class="mejoras" id="contenedorMejoras"></div>
 
-<button onclick="reiniciar()">Reiniciar</button>
-<button onclick="ascender()">Ascender</button>
+<button id="reiniciar" onclick="reiniciar()">Reiniciar</button>
+<button id="ascender" onclick="ascender()">Ascender</button>
 
 <script>
-let puntos = 0;
-let puntos_totales = 0;
-let puntos_por_click = 1;
-let puntos_por_segundo = 0;
-let multiplicador = 1;
+let puntos=0,puntos_totales=0,puntos_por_click=1,puntos_por_segundo=0,multiplicador=1;
+const TOTAL_INDICES=448;
+const indices={};
 
-const TOTAL_INDICES = 448;
-const UMBRAL_PRESTIGIO = 10000000;
-
-const indices = {};
-
-function formatearNumero(num) {
-    const sufijos = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
-    let i = 0;
-    while (num >= 1000 && i < sufijos.length - 1) {
-        num /= 1000;
-        i++;
-    }
-    return num.toFixed(2) + " " + sufijos[i];
+function formatearNumero(num){
+    const sufijos=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
+    let i=0;
+    while(num>=1000 && i<sufijos.length-1){num/=1000;i++;}
+    return num.toFixed(2)+" "+sufijos[i];
 }
 
-function recargar() {
-    Puntos.textContent = "Puntos: " + formatearNumero(puntos);
-    PuntosPorClick.textContent = "Puntos por click: " + formatearNumero(puntos_por_click);
-    PuntosPorSegundo.textContent = "Puntos por segundo: " + formatearNumero(puntos_por_segundo);
-    PuntosTotales.textContent = "Puntos totales: " + formatearNumero(puntos_totales);
-    Multiplicador.textContent = "Multiplicador: " + multiplicador.toFixed(2) + "x";
-}
+function recargar(){
+    Puntos.textContent="Puntos: "+formatearNumero(puntos);
+    PuntosPorClick.textContent="Puntos por click: "+formatearNumero(puntos_por_click);
+    PuntosPorSegundo.textContent="Puntos por segundo: "+formatearNumero(puntos_por_segundo);
+    PuntosTotales.textContent="Puntos totales: "+formatearNumero(puntos_totales);
+    Multiplicador.textContent="Multiplicador: "+multiplicador.toFixed(2)+"x";
 
-function hacerClick() {
-    let g = Math.floor(puntos_por_click * multiplicador);
-    puntos += g;
-    puntos_totales += g;
-    guardar();
-    recargar();
-}
-
-setInterval(() => {
-    let g = Math.floor(puntos_por_segundo * multiplicador);
-    puntos += g;
-    puntos_totales += g;
-    guardar();
-    recargar();
-}, 1000);
-
-function sumarPuntosPorClick(p, c, i) {
-    if (puntos >= c) {
-        puntos -= c;
-        puntos_por_click += p;
-        indices[i]++;
-        guardar();
-        recargar();
+    for(let i in indices){
+        let el=document.getElementById("c"+i);
+        if(el) el.textContent=indices[i];
     }
 }
 
-function sumarPuntosPorSegundo(p, c, i) {
-    if (puntos >= c) {
-        puntos -= c;
-        puntos_por_segundo += p;
-        indices[i]++;
-        guardar();
-        recargar();
-    }
+function hacerClick(){
+    let g=Math.floor(puntos_por_click*multiplicador);
+    puntos+=g; puntos_totales+=g;
+    guardar(); recargar();
 }
 
-function generarMejoras() {
-    let cont = document.getElementById("contenedorMejoras");
+setInterval(()=>{
+    let g=Math.floor(puntos_por_segundo*multiplicador);
+    puntos+=g; puntos_totales+=g;
+    guardar(); recargar();
+},1000);
 
-    for (let i = 1; i <= TOTAL_INDICES; i++) {
-        let esClick = i % 2;
-        let nivel = Math.floor(i / 2);
+function comprar(tipo,ganancia,coste,id){
+    if(puntos<coste)return;
+    puntos-=coste;
 
-        let ganancia = Math.floor(Math.pow(1.7, nivel));
-        let coste = Math.floor(50 * Math.pow(2.15, nivel));
+    if(tipo==="click") puntos_por_click+=ganancia;
+    else puntos_por_segundo+=ganancia;
 
-        indices["i"+i] = 0;
+    indices[id]=(indices[id]||0)+1;
+    guardar(); recargar();
+}
 
-        let fila = document.createElement("div");
-        fila.className = "fila";
+function generarMejoras(){
+    let cont=document.getElementById("contenedorMejoras");
 
-        let btn = document.createElement("button");
-        btn.className = "mejora";
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        let esClick=i%2;
+        let nivel=Math.floor(i/2);
 
-        if (esClick) {
-            btn.textContent = "+"+formatearNumero(ganancia)+" click ("+formatearNumero(coste)+")";
-            btn.onclick = () => sumarPuntosPorClick(ganancia, coste, "i"+i);
-        } else {
-            btn.textContent = "+"+formatearNumero(ganancia)+" /s ("+formatearNumero(coste)+")";
-            btn.onclick = () => sumarPuntosPorSegundo(ganancia, coste, "i"+i);
-        }
+        let ganancia=Math.floor(Math.pow(1.7,nivel));
+        let coste=Math.floor(50*Math.pow(2.15,nivel));
 
-        let cant = document.createElement("div");
-        cant.className = "cantidad";
-        cant.id = "c"+i;
-        cant.textContent = 0;
+        indices[i]=0;
+
+        let fila=document.createElement("div");
+        fila.className="fila";
+
+        let btn=document.createElement("button");
+        btn.className="mejora";
+
+        btn.textContent=`+${formatearNumero(ganancia)} ${esClick?"click":"/s"} (${formatearNumero(coste)})`;
+        btn.onclick=()=>comprar(esClick?"click":"seg",ganancia,coste,i);
+
+        let cant=document.createElement("div");
+        cant.className="cantidad";
+        cant.id="c"+i;
+        cant.textContent=0;
 
         fila.appendChild(btn);
         fila.appendChild(cant);
@@ -192,43 +180,27 @@ function generarMejoras() {
     }
 }
 
-function guardar() {
-    localStorage.setItem("save", JSON.stringify({
-        puntos, puntos_totales, puntos_por_click, puntos_por_segundo, multiplicador, indices
-    }));
+function guardar(){
+    localStorage.setItem("save",JSON.stringify({puntos,puntos_totales,puntos_por_click,puntos_por_segundo,multiplicador,indices}));
 }
 
-function cargar() {
-    let s = localStorage.getItem("save");
-    if (!s) return;
-    let data = JSON.parse(s);
-
-    puntos = data.puntos;
-    puntos_totales = data.puntos_totales;
-    puntos_por_click = data.puntos_por_click;
-    puntos_por_segundo = data.puntos_por_segundo;
-    multiplicador = data.multiplicador;
-    Object.assign(indices, data.indices);
+function cargar(){
+    let s=localStorage.getItem("save");
+    if(!s)return;
+    let d=JSON.parse(s);
+    Object.assign(window,d);
 }
 
-function reiniciar() {
+function reiniciar(){
     localStorage.clear();
     location.reload();
 }
 
-function ascender() {
-    if (puntos_totales < UMBRAL_PRESTIGIO) return alert("No suficiente");
-
-    let bonus = puntos_totales / UMBRAL_PRESTIGIO;
-    multiplicador += bonus;
-
-    puntos = 0;
-    puntos_totales = 0;
-    puntos_por_click = 1;
-    puntos_por_segundo = 0;
-
-    guardar();
-    recargar();
+function ascender(){
+    if(puntos_totales<10000000)return alert("No suficiente");
+    multiplicador+=puntos_totales/10000000;
+    puntos=0;puntos_totales=0;puntos_por_click=1;puntos_por_segundo=0;
+    guardar();recargar();
 }
 
 generarMejoras();
