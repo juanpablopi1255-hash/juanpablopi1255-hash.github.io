@@ -137,7 +137,12 @@ const indices = {};
 
 // ===== FORMATO =====
 function formatearNumero(num){
-    const sufijos=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
+    const sufijos = [
+  "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", 
+  "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Od", "Nd", "Vg", 
+  "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ovg", "Nvg", "Tg"
+];
+
     let i=0;
     while(num>=1000 && i<sufijos.length-1){
         num/=1000;
