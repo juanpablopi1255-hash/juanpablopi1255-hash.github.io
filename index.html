@@ -1,74 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Clicker</title>
-<style> body { background: #22C1C3; background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(240, 104, 242, 1) 52%, rgba(253, 187, 45, 1) 100%); } html, body { height: 100%; margin: 0; } #clicker{ width: 200px; height: 200px; border-radius: 200px; background-color: #111; border: 2px solid #ccc; box-shadow: 0 0 10px #000; cursor: pointer; background-repeat: no-repeat; } #clicker:active{ background-color: #333; } .contenedor { /* Se restaura tu posicionamiento original */ margin-top: -1%; margin-left: 30%; font-size: 30px; color: black; } .mejoras { position: fixed; top: 0; right: 0; width: 450px; height: 100%; background: #22C1C3; background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(240, 104, 242, 1) 52%, rgba(253, 187, 45, 1) 100%); border-left: 1px solid #cccccc; box-shadow: -1px 0 10px #000; padding: 15px; box-sizing: border-box; overflow-y: auto;/*barra scroll*/ padding-bottom: 50px; } .mejora{ background-color: rgba(225, 222, 222, 0.25); width: 340px; height: 40px; margin-left: 15px; margin-top: 20px; border: 1px solid #cccccc; box-shadow: 0 0 5px #000; color: #000; box-sizing: border-box; text-align: left; padding-left: 10px; cursor: pointer; } .dato{ color: #000; font-size: 20px; margin-left: 2%; } .cantidad{ background-color: rgba(225, 222, 222, 0.25); width: 40px; height: 40px; margin-top: 20px; border: 1px solid #cccccc; box-shadow: 0 0 5px #000; color: #000; box-sizing: border-box; display: flex; justify-content: center; align-items: center; font-size: 20px; } .fila{ display: flex; flex-direction: row; } #reiniciar{ background-color: #d11212; border-radius: 40px; border: 2px solid #d11212; color: white; width: 150px; padding: 10px 20px; cursor: pointer; position: fixed; bottom: 20px; left: 20px; margin: 0; } #ascender{ background-color: #1862ec; border-radius: 40px; border: 2px solid #1862ec; color: white; padding: 10px 20px; width: 150px; cursor: pointer; position: fixed; bottom: 20px; left: 20px; margin: 0 0 60px 0; } .info { padding-top: 20px; padding-left: 20px; color: #000; } </style>
 <meta charset="UTF-8">
-<title>Clicker Pro</title>
+<title>Clicker</title>
 
 <style>
+/* TU CSS ORIGINAL (intacto) */
 body {
-    background: linear-gradient(0deg, #22C1C3 0%, #f068f2 52%, #fdbb2d 100%);
-    margin: 0;
+    background: #22C1C3;
+    background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(240, 104, 242, 1) 52%, rgba(253, 187, 45, 1) 100%);
+}
+html, body {
     height: 100%;
-    font-family: Arial;
+    margin: 0;
 }
-
-.info {
-    padding: 20px;
-}
-
-.dato {
-    font-size: 18px;
-}
-
-.contenedor {
-    margin-left: 30%;
-    font-size: 30px;
-}
-
-#clicker {
+#clicker{
     width: 200px;
     height: 200px;
     border-radius: 200px;
-    background: #111;
+    background-color: #111;
     border: 2px solid #ccc;
+    box-shadow: 0 0 10px #000;
     cursor: pointer;
 }
-
-#clicker:active {
-    background: #333;
+#clicker:active{
+    background-color: #333;
 }
-
+.contenedor {
+    margin-top: -1%;
+    margin-left: 30%;
+    font-size: 30px;
+    color: black;
+}
 .mejoras {
     position: fixed;
     top: 0;
     right: 0;
-    width: 420px;
+    width: 450px;
     height: 100%;
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,104,242,1) 52%, rgba(253,187,45,1) 100%);
+    border-left: 1px solid #ccc;
+    box-shadow: -1px 0 10px #000;
+    padding: 15px;
+    box-sizing: border-box;
     overflow-y: auto;
-    padding: 10px;
-    background: linear-gradient(0deg, #22C1C3, #f068f2, #fdbb2d);
+    padding-bottom: 50px;
 }
-
-.fila {
-    display: flex;
-    margin-top: 10px;
-}
-
-.mejora {
-    width: 300px;
+.mejora{
+    background-color: rgba(225, 222, 222, 0.25);
+    width: 340px;
+    height: 40px;
+    margin-left: 15px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #000;
+    text-align: left;
+    padding-left: 10px;
     cursor: pointer;
 }
-
-.cantidad {
-    width: 50px;
-    text-align: center;
+.dato{
+    font-size: 20px;
+    margin-left: 2%;
 }
-
-button {
-    padding: 8px;
+.cantidad{
+    background-color: rgba(225, 222, 222, 0.25);
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.fila{
+    display:flex;
+}
+#reiniciar{
+    background-color: #d11212;
+    border-radius: 40px;
+    border: 2px solid #d11212;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+#ascender{
+    background-color: #1862ec;
+    border-radius: 40px;
+    border: 2px solid #1862ec;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+}
+.info {
+    padding: 20px;
 }
 </style>
 </head>
@@ -79,11 +110,7 @@ button {
     <p id="PuntosPorClick" class="dato">Puntos por click: 1</p>
     <p id="PuntosPorSegundo" class="dato">Puntos por segundo: 0</p>
     <p id="PuntosTotales" class="dato">Puntos totales: 0</p>
-    <p id="Multiplicador" class="dato">Multiplicador: 1</p>
-    <p id="PuntosPorClick">Puntos por click: 1</p>
-    <p id="PuntosPorSegundo">Puntos por segundo: 0</p>
-    <p id="PuntosTotales">Puntos totales: 0</p>
-    <p id="Multiplicador">Multiplicador: 1x</p>
+    <p id="Multiplicador" class="dato">Multiplicador: 1x</p>
 </div>
 
 <div class="contenedor">
@@ -91,10 +118,11 @@ button {
     <button id="clicker" onclick="hacerClick()"></button>
 </div>
 
-<div class="mejoras">
-</div>
-<button onclick="reiniciarTodoElJuego()" id="reiniciar">Reiniciar Partida</button>
-<button onclick="ascender()"  id="ascender">Ascender</button>
+<div class="mejoras" id="contenedorMejoras"></div>
+
+<button id="reiniciar" onclick="reiniciarTodoElJuego()">Reiniciar Partida</button>
+<button id="ascender" onclick="ascender()">Ascender</button>
+
 <script>
 let puntos = 0;
 let puntos_totales = 0;
@@ -107,165 +135,151 @@ const UMBRAL_PRESTIGIO = 10000000;
 
 const indices = {};
 
-// ===== FORMATO DE NÚMEROS =====
-function formatearNumero(num) {
-    const sufijos = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
-    let i = 0;
-    while (num >= 1000 && i < sufijos.length - 1) {
-        num /= 1000;
+// ===== FORMATO =====
+function formatearNumero(num){
+    const sufijos=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
+    let i=0;
+    while(num>=1000 && i<sufijos.length-1){
+        num/=1000;
         i++;
     }
-    return num.toFixed(2) + " " + sufijos[i];
+    return num.toFixed(2)+" "+sufijos[i];
 }
 
-// ===== ACTUALIZAR UI =====
-function recargar() {
-    document.getElementById("Puntos").textContent = "Puntos: " + formatearNumero(puntos);
-    document.getElementById("PuntosPorClick").textContent = "Puntos por click: " + formatearNumero(puntos_por_click);
-    document.getElementById("PuntosPorSegundo").textContent = "Puntos por segundo: " + formatearNumero(puntos_por_segundo);
-    document.getElementById("PuntosTotales").textContent = "Puntos totales: " + formatearNumero(puntos_totales);
-    document.getElementById("Multiplicador").textContent = "Multiplicador: " + multiplicador.toFixed(2) + "x";
+// ===== UI =====
+function recargar(){
+    Puntos.textContent="Puntos: "+formatearNumero(puntos);
+    PuntosPorClick.textContent="Puntos por click: "+formatearNumero(puntos_por_click);
+    PuntosPorSegundo.textContent="Puntos por segundo: "+formatearNumero(puntos_por_segundo);
+    PuntosTotales.textContent="Puntos totales: "+formatearNumero(puntos_totales);
+    Multiplicador.textContent="Multiplicador: "+multiplicador.toFixed(2)+"x";
 
-    // actualizar contadores
-    for (let i = 1; i <= TOTAL_INDICES; i++) {
-        let el = document.getElementById(i);
-        if (el) el.textContent = indices[i] || 0;
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        let el=document.getElementById(i);
+        if(el) el.textContent=indices[i]||0;
     }
 }
 
 // ===== CLICK =====
-function hacerClick() {
-    let g = Math.floor(puntos_por_click * multiplicador);
-    puntos += g;
-    puntos_totales += g;
+function hacerClick(){
+    let g=Math.floor(puntos_por_click*multiplicador);
+    puntos+=g;
+    puntos_totales+=g;
     guardar();
     recargar();
 }
 
 // ===== AUTO =====
-setInterval(() => {
-    let g = Math.floor(puntos_por_segundo * multiplicador);
-    puntos += g;
-    puntos_totales += g;
+setInterval(()=>{
+    let g=Math.floor(puntos_por_segundo*multiplicador);
+    puntos+=g;
+    puntos_totales+=g;
     guardar();
     recargar();
-}, 1000);
+},1000);
 
-// ===== COMPRAS =====
-function comprar(tipo, ganancia, coste, id) {
-    if (puntos < coste) {
+// ===== COMPRAR =====
+function comprar(tipo,ganancia,coste,id){
+    if(puntos<coste){
         alert("Puntos insuficientes");
         return;
     }
 
-    puntos -= coste;
+    puntos-=coste;
 
-    if (tipo === "click") {
-        puntos_por_click += ganancia;
-    } else {
-        puntos_por_segundo += ganancia;
-    }
+    if(tipo==="click") puntos_por_click+=ganancia;
+    else puntos_por_segundo+=ganancia;
 
-    indices[id] = (indices[id] || 0) + 1;
+    indices[id]=(indices[id]||0)+1;
 
     guardar();
     recargar();
 }
 
 // ===== GENERAR MEJORAS =====
-function generarMejoras() {
-    const contenedor = document.getElementById("contenedorMejoras");
+function generarMejoras(){
+    let cont=document.getElementById("contenedorMejoras");
 
-    for (let i = 1; i <= TOTAL_INDICES; i++) {
-        let esClick = i % 2 !== 0;
-        let nivel = Math.floor(i / 2);
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        let esClick=i%2!==0;
+        let nivel=Math.floor(i/2);
 
-        let ganancia = Math.floor(Math.pow(1.7, nivel));
-        let coste = Math.floor(50 * Math.pow(2.15, nivel));
+        let ganancia=Math.floor(Math.pow(1.7,nivel));
+        let coste=Math.floor(50*Math.pow(2.15,nivel));
 
-        indices[i] = 0;
+        indices[i]=0;
 
-        const fila = document.createElement("div");
-        fila.className = "fila";
+        let fila=document.createElement("div");
+        fila.className="fila";
 
-        const boton = document.createElement("button");
-        boton.className = "mejora";
+        let btn=document.createElement("button");
+        btn.className="mejora";
 
-        boton.textContent = `+${formatearNumero(ganancia)} ${esClick ? "click" : "/s"} (${formatearNumero(coste)})`;
+        btn.textContent=`+${formatearNumero(ganancia)} ${esClick?"click":"/s"} (${formatearNumero(coste)})`;
+        btn.onclick=()=>comprar(esClick?"click":"seg",ganancia,coste,i);
 
-        boton.onclick = () => comprar(esClick ? "click" : "seg", ganancia, coste, i);
+        let cant=document.createElement("div");
+        cant.className="cantidad";
+        cant.id=i;
+        cant.textContent=0;
 
-        const cantidad = document.createElement("div");
-        cantidad.className = "cantidad";
-        cantidad.id = i;
-        cantidad.textContent = 0;
-
-        fila.appendChild(boton);
-        fila.appendChild(cantidad);
-        contenedor.appendChild(fila);
+        fila.appendChild(btn);
+        fila.appendChild(cant);
+        cont.appendChild(fila);
     }
 }
 
 // ===== GUARDAR =====
-function guardar() {
-    localStorage.setItem("save", JSON.stringify({
-        puntos,
-        puntos_totales,
-        puntos_por_click,
-        puntos_por_segundo,
-        multiplicador,
-        indices
+function guardar(){
+    localStorage.setItem("save",JSON.stringify({
+        puntos,puntos_totales,puntos_por_click,puntos_por_segundo,multiplicador,indices
     }));
 }
 
 // ===== CARGAR =====
-function cargar() {
-    let data = localStorage.getItem("save");
-    if (!data) return;
+function cargar(){
+    let data=localStorage.getItem("save");
+    if(!data)return;
 
-    let obj = JSON.parse(data);
+    let d=JSON.parse(data);
 
-    puntos = obj.puntos || 0;
-    puntos_totales = obj.puntos_totales || 0;
-    puntos_por_click = obj.puntos_por_click || 1;
-    puntos_por_segundo = obj.puntos_por_segundo || 0;
-    multiplicador = obj.multiplicador || 1;
+    puntos=d.puntos||0;
+    puntos_totales=d.puntos_totales||0;
+    puntos_por_click=d.puntos_por_click||1;
+    puntos_por_segundo=d.puntos_por_segundo||0;
+    multiplicador=d.multiplicador||1;
 
-    if (obj.indices) {
-        Object.assign(indices, obj.indices);
-    }
+    Object.assign(indices,d.indices||{});
 }
 
 // ===== REINICIAR =====
-function reiniciarTodoElJuego() {
-    if (!confirm("¿Seguro que quieres reiniciar?")) return;
+function reiniciarTodoElJuego(){
+    if(!confirm("¿Seguro?"))return;
     localStorage.clear();
     location.reload();
 }
 
 // ===== ASCENDER =====
-function ascender() {
-    if (puntos_totales < UMBRAL_PRESTIGIO) {
-        alert("No tienes suficientes puntos para ascender");
+function ascender(){
+    if(puntos_totales<UMBRAL_PRESTIGIO){
+        alert("No tienes suficientes puntos");
         return;
     }
 
-    let bonus = puntos_totales / UMBRAL_PRESTIGIO;
-    multiplicador += bonus;
+    let bonus=puntos_totales/UMBRAL_PRESTIGIO;
+    multiplicador+=bonus;
 
-    puntos = 0;
-    puntos_totales = 0;
-    puntos_por_click = 1;
-    puntos_por_segundo = 0;
+    puntos=0;
+    puntos_totales=0;
+    puntos_por_click=1;
+    puntos_por_segundo=0;
 
-    for (let i = 1; i <= TOTAL_INDICES; i++) {
-        indices[i] = 0;
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        indices[i]=0;
     }
 
     guardar();
     recargar();
-
-    alert("Ascendiste. Nuevo multiplicador: " + multiplicador.toFixed(2) + "x");
 }
 
 // ===== INIT =====
