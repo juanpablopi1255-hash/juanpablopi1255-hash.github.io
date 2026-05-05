@@ -120,7 +120,303 @@ html, body {
 
 <div class="mejoras" id="contenedorMejoras"></div>
 
-<button id="reiniciar" onclick="reiniciarTodoElJuego()">Reiniciar Partida</button>
+<button id="reiniciar" onclick="reiniciarTodoElJuego()" CTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Clicker</title>
+
+<style>
+/* TU CSS ORIGINAL (intacto) */
+body {
+    background: #22C1C3;
+    background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(240, 104, 242, 1) 52%, rgba(253, 187, 45, 1) 100%);
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+#clicker{
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+    background-color: #111;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 10px #000;
+    cursor: pointer;
+}
+#clicker:active{
+    background-color: #333;
+}
+.contenedor {
+    margin-top: -1%;
+    margin-left: 30%;
+    font-size: 30px;
+    color: black;
+}
+.mejoras {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 450px;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(240,104,242,1) 52%, rgba(253,187,45,1) 100%);
+    border-left: 1px solid #ccc;
+    box-shadow: -1px 0 10px #000;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding-bottom: 50px;
+}
+.mejora{
+    background-color: rgba(225, 222, 222, 0.25);
+    width: 340px;
+    height: 40px;
+    margin-left: 15px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #000;
+    text-align: left;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.dato{
+    font-size: 20px;
+    margin-left: 2%;
+}
+.cantidad{
+    background-color: rgba(225, 222, 222, 0.25);
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.fila{
+    display:flex;
+}
+#reiniciar{
+    background-color: #d11212;
+    border-radius: 40px;
+    border: 2px solid #d11212;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+#ascender{
+    background-color: #1862ec;
+    border-radius: 40px;
+    border: 2px solid #1862ec;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+}
+.info {
+    padding: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="info">
+    <p id="PuntosPorClick" class="dato">Puntos por click: 1</p>
+    <p id="PuntosPorSegundo" class="dato">Puntos por segundo: 0</p>
+    <p id="PuntosTotales" class="dato">Puntos totales: 0</p>
+    <p id="Multiplicador" class="dato">Multiplicador: 1x</p>
+</div>
+
+<div class="contenedor">
+    <p id="Puntos">Puntos: 0</p>
+    <button id="clicker" onclick="hacerClick()" tabindex="-1"></button>
+</div>
+
+<div class="mejoras" id="contenedorMejoras"></div>
+
+<button id="reiniciar" onclick="reiniciarTodoElJuego()" tabindex="-1">Reiniciar Partida</button>
+<button id="ascender" onclick="ascender()" tabindex="-1">Ascender</button>
+
+<script>
+let puntos = 0;
+let puntos_totales = 0;
+let puntos_por_click = 1;
+let puntos_por_segundo = 0;
+let multiplicador = 1;
+
+const TOTAL_INDICES = 2000;
+const UMBRAL_PRESTIGIO = 10000000;
+
+const indices = {};
+
+// ===== FORMATO =====
+function formatearNumero(num){
+    const sufijos = [
+  "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", 
+  "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Od", "Nd", "Vg", 
+  "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ovg", "Nvg", "Tg"
+];
+
+    let i=0;
+    while(num>=1000 && i<sufijos.length-1){
+        num/=1000;
+        i++;
+    }
+    return num.toFixed(2)+" "+sufijos[i];
+}
+
+// ===== UI =====
+function recargar(){
+    Puntos.textContent="Puntos: "+formatearNumero(puntos);
+    PuntosPorClick.textContent="Puntos por click: "+formatearNumero(puntos_por_click);
+    PuntosPorSegundo.textContent="Puntos por segundo: "+formatearNumero(puntos_por_segundo);
+    PuntosTotales.textContent="Puntos totales: "+formatearNumero(puntos_totales);
+    Multiplicador.textContent="Multiplicador: "+multiplicador.toFixed(2)+"x";
+
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        let el=document.getElementById(i);
+        if(el) el.textContent=indices[i]||0;
+    }
+}
+
+// ===== CLICK =====
+function hacerClick(){
+    let g=Math.floor(puntos_por_click*multiplicador);
+    puntos+=g;
+    puntos_totales+=g;
+    guardar();
+    recargar();
+}
+
+// ===== AUTO =====
+setInterval(()=>{
+    let g=Math.floor(puntos_por_segundo*multiplicador);
+    puntos+=g;
+    puntos_totales+=g;
+    guardar();
+    recargar();
+},1000);
+
+// ===== COMPRAR =====
+function comprar(tipo,ganancia,coste,id){
+    if(puntos<coste){
+        alert("Puntos insuficientes");
+        return;
+    }
+
+    puntos-=coste;
+
+    if(tipo==="click") puntos_por_click+=ganancia;
+    else puntos_por_segundo+=ganancia;
+
+    indices[id]=(indices[id]||0)+1;
+
+    guardar();
+    recargar();
+}
+
+// ===== GENERAR MEJORAS =====
+function generarMejoras(){
+    let cont=document.getElementById("contenedorMejoras");
+
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        let esClick=i%2!==0;
+        let nivel=Math.floor(i/2);
+
+        let ganancia=Math.floor(Math.pow(1.7,nivel));
+        let coste=Math.floor(50*Math.pow(2.15,nivel));
+
+        indices[i]=0;
+
+        let fila=document.createElement("div");
+        fila.className="fila";
+
+        let btn=document.createElement("button");
+        btn.className="mejora";
+
+        btn.textContent=`+${formatearNumero(ganancia)} ${esClick?"click":"/s"} (${formatearNumero(coste)})`;
+        btn.onclick=()=>comprar(esClick?"click":"seg",ganancia,coste,i);
+
+        let cant=document.createElement("div");
+        cant.className="cantidad";
+        cant.id=i;
+        cant.textContent=0;
+
+        fila.appendChild(btn);
+        fila.appendChild(cant);
+        cont.appendChild(fila);
+    }
+}
+
+// ===== GUARDAR =====
+function guardar(){
+    localStorage.setItem("save",JSON.stringify({
+        puntos,puntos_totales,puntos_por_click,puntos_por_segundo,multiplicador,indices
+    }));
+}
+
+// ===== CARGAR =====
+function cargar(){
+    let data=localStorage.getItem("save");
+    if(!data)return;
+
+    let d=JSON.parse(data);
+
+    puntos=d.puntos||0;
+    puntos_totales=d.puntos_totales||0;
+    puntos_por_click=d.puntos_por_click||1;
+    puntos_por_segundo=d.puntos_por_segundo||0;
+    multiplicador=d.multiplicador||1;
+
+    Object.assign(indices,d.indices||{});
+}
+
+// ===== REINICIAR =====
+function reiniciarTodoElJuego(){
+    if(!confirm("¿Seguro?"))return;
+    localStorage.clear();
+    location.reload();
+}
+
+// ===== ASCENDER =====
+function ascender(){
+    if(puntos_totales<UMBRAL_PRESTIGIO){
+        alert("No tienes suficientes puntos");
+        return;
+    }
+
+    let bonus=puntos_totales/UMBRAL_PRESTIGIO;
+    multiplicador+=bonus;
+
+    puntos=0;
+    puntos_totales=0;
+    puntos_por_click=1;
+    puntos_por_segundo=0;
+
+    for(let i=1;i<=TOTAL_INDICES;i++){
+        indices[i]=0;
+    }
+
+    guardar();
+    recargar();
+}
+
+// ===== INIT =====
+generarMejoras();
+cargar();
+recargar();
+</script>
+
+</body>
+</html>>Reiniciar Partida</button>
 <button id="ascender" onclick="ascender()">Ascender</button>
 
 <script>
