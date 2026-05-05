@@ -1,131 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Clicker</title>
+<meta charset="UTF-8">
+<title>Clicker Pro</title>
 
-    <style>
-        body {
-            background: #22C1C3;
-            background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(240, 104, 242, 1) 52%, rgba(253, 187, 45, 1) 100%);
-        }
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
+<style>
+body {
+    background: linear-gradient(0deg, #22C1C3 0%, #f068f2 52%, #fdbb2d 100%);
+    margin: 0;
+    height: 100%;
+    font-family: Arial;
+}
 
-        #clicker{
-            width: 200px;
-            height: 200px;
-            border-radius: 200px;
-            background-color: #111;
-            border: 2px solid #ccc;
-            box-shadow: 0 0 10px #000;
-            cursor: pointer;
-            background-repeat: no-repeat;
-        }
-        #clicker:active{
-            background-color: #333;
-        }
-        .contenedor {
-            /* Se restaura tu posicionamiento original */
-            margin-top: -1%;
-            margin-left: 30%;
-            font-size: 30px;
-            color: black;
-        }
-        .mejoras {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 450px;
-            height: 100%;
-            background: #22C1C3;
-            background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(240, 104, 242, 1) 52%, rgba(253, 187, 45, 1) 100%);
-            border-left: 1px solid #cccccc;
-            box-shadow: -1px 0 10px #000;
-            padding: 15px;
-            box-sizing: border-box;
-            overflow-y: auto;/*barra scroll*/
-            padding-bottom: 50px;
-        }
-        .mejora{
-            background-color: rgba(225, 222, 222, 0.25);
-            width: 340px;
-            height: 40px;
-            margin-left: 15px;
-            margin-top: 20px;
-            border: 1px solid #cccccc;
-            box-shadow: 0 0 5px #000;
-            color: #000;
-            box-sizing: border-box;
-            text-align: left;
-            padding-left: 10px;
-            cursor: pointer;
-        }
-        .dato{
-            color: #000;
-            font-size: 20px;
-            margin-left: 2%;
-        }
-        .cantidad{
-            background-color: rgba(225, 222, 222, 0.25);
-            width: 40px;
-            height: 40px;
-            margin-top: 20px;
-            border: 1px solid #cccccc;
-            box-shadow: 0 0 5px #000;
-            color: #000;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-        }
-        .fila{
-            display: flex;
-            flex-direction: row;
-        }
-        #reiniciar{
-            background-color: #d11212;
-            border-radius: 40px;
-            border: 2px solid #d11212;
-            color: white;
-            width: 150px;
-            padding: 10px 20px;
-            cursor: pointer;
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            margin: 0;
-        }
-        #ascender{
-            background-color: #1862ec;
-            border-radius: 40px;
-            border: 2px solid #1862ec;
-            color: white;
-            padding: 10px 20px;
-            width: 150px;
-            cursor: pointer;
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            margin: 0 0 60px 0;
-        }
-        .info {
-            padding-top: 20px;
-            padding-left: 20px;
-            color: #000;
-        }
-    </style>
+.info {
+    padding: 20px;
+}
+
+.dato {
+    font-size: 18px;
+}
+
+.contenedor {
+    margin-left: 30%;
+    font-size: 30px;
+}
+
+#clicker {
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+    background: #111;
+    border: 2px solid #ccc;
+    cursor: pointer;
+}
+
+#clicker:active {
+    background: #333;
+}
+
+.mejoras {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    background: linear-gradient(0deg, #22C1C3, #f068f2, #fdbb2d);
+}
+
+.fila {
+    display: flex;
+    margin-top: 10px;
+}
+
+.mejora {
+    width: 300px;
+    cursor: pointer;
+}
+
+.cantidad {
+    width: 50px;
+    text-align: center;
+}
+
+button {
+    padding: 8px;
+}
+</style>
 </head>
+
 <body>
 
 <div class="info">
-    <p id="PuntosPorClick" class="dato">Puntos por click: 1</p>
-    <p id="PuntosPorSegundo" class="dato">Puntos por segundo: 0</p>
-    <p id="PuntosTotales" class="dato">Puntos totales: 0</p>
-    <p id="Multiplicador" class="dato">Multiplicador: 1</p>
+    <p id="PuntosPorClick">Puntos por click: 1</p>
+    <p id="PuntosPorSegundo">Puntos por segundo: 0</p>
+    <p id="PuntosTotales">Puntos totales: 0</p>
+    <p id="Multiplicador">Multiplicador: 1x</p>
 </div>
 
 <div class="contenedor">
@@ -133,427 +84,157 @@
     <button id="clicker" onclick="hacerClick()"></button>
 </div>
 
-<div class="mejoras">
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(1, 50, 'indice_1')">+1 punto por click. Coste: 50</button>
-        <div id="1" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(1, 150, 'indice_2')">+1 punto por segundo. Coste: 150</button>
-        <div id="2" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(5, 300, 'indice_3')">+5 puntos por click. Coste: 300</button>
-        <div id="3" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(5, 700, 'indice_4')">+5 puntos por segundo. Coste: 700</button>
-        <div id="4" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(10, 600, 'indice_5')">+10 puntos por click. Coste: 600</button>
-        <div id="5" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(10, 1600, 'indice_6')">+10 puntos por segundo. Coste: 1600</button>
-        <div id="6" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(30, 2300, 'indice_7')">+30 puntos por click. Coste: 2300</button>
-        <div id="7" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(30, 3000, 'indice_8')">+30 puntos por segundo. Coste: 3000</button>
-        <div id="8" class="cantidad"></div>
-    </div>
+<div class="mejoras" id="contenedorMejoras"></div>
 
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(50, 6000, 'indice_9')">+50 puntos por click. Coste: 6.000</button>
-        <div id="9" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(50, 15000, 'indice_10')">+50 puntos por segundo. Coste: 15.000</button>
-        <div id="10" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(100, 25000, 'indice_11')">+100 puntos por click. Coste: 25.000</button>
-        <div id="11" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(100, 60000, 'indice_12')">+100 puntos por segundo. Coste: 60.000</button>
-        <div id="12" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(250, 120000, 'indice_13')">+250 puntos por click. Coste: 120.000</button>
-        <div id="13" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(250, 300000, 'indice_14')">+250 puntos por segundo. Coste: 300.000</button>
-        <div id="14" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(500, 600000, 'indice_15')">+500 puntos por click. Coste: 600.000</button>
-        <div id="15" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(500, 1500000, 'indice_16')">+500 puntos por segundo. Coste: 1.5M</button>
-        <div id="16" class="cantidad"></div>
-    </div>
+<button onclick="reiniciar()">Reiniciar</button>
+<button onclick="ascender()">Ascender</button>
 
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(1000, 3500000, 'indice_17')">+1K puntos por click. Coste: 3.5M</button>
-        <div id="17" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(1000, 9000000, 'indice_18')">+1K puntos por segundo. Coste: 9M</button>
-        <div id="18" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(5000, 25000000, 'indice_19')">+5K puntos por click. Coste: 25M</button>
-        <div id="19" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(5000, 60000000, 'indice_20')">+5K puntos por segundo. Coste: 60M</button>
-        <div id="20" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(10000, 150000000, 'indice_21')">+10K puntos por click. Coste: 150M</button>
-        <div id="21" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(10000, 350000000, 'indice_22')">+10K puntos por segundo. Coste: 350M</button>
-        <div id="22" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(50000, 800000000, 'indice_23')">+50K puntos por click. Coste: 800M</button>
-        <div id="23" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(50000, 2000000000, 'indice_24')">+50K puntos por segundo. Coste: 2B</button>
-        <div id="24" class="cantidad"></div>
-    </div>
-
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(100000, 5000000000, 'indice_25')">+100K puntos por click. Coste: 5B</button>
-        <div id="25" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(100000, 10000000000, 'indice_26')">+100K puntos por segundo. Coste: 10B</button>
-        <div id="26" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorClick(500000, 25000000000, 'indice_27')">+500K puntos por click. Coste: 25B</button>
-        <div id="27" class="cantidad"></div>
-    </div>
-    <div class="fila">
-        <button class="mejora" onclick="sumarPuntosPorSegundo(500000, 50000000000, 'indice_28')">+500K puntos por segundo. Coste: 50B</button>
-        <div id="28" class="cantidad"></div>
-    </div>
-    <div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(1000000, 120000000000, 'indice_29')">+1M puntos por click. Coste: 120B</button>
-    <div id="29" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(1000000, 250000000000, 'indice_30')">+1M puntos por segundo. Coste: 250B</button>
-    <div id="30" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(5000000, 600000000000, 'indice_31')">+5M puntos por click. Coste: 600B</button>
-    <div id="31" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(5000000, 1200000000000, 'indice_32')">+5M puntos por segundo. Coste: 1.2T</button>
-    <div id="32" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(10000000, 3000000000000, 'indice_33')">+10M puntos por click. Coste: 3T</button>
-    <div id="33" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(10000000, 7000000000000, 'indice_34')">+10M puntos por segundo. Coste: 7T</button>
-    <div id="34" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(50000000, 15000000000000, 'indice_35')">+50M puntos por click. Coste: 15T</button>
-    <div id="35" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(50000000, 30000000000000, 'indice_36')">+50M puntos por segundo. Coste: 30T</button>
-    <div id="36" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(100000000, 70000000000000, 'indice_37')">+100M puntos por click. Coste: 70T</button>
-    <div id="37" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(100000000, 150000000000000, 'indice_38')">+100M puntos por segundo. Coste: 150T</button>
-    <div id="38" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(500000000, 300000000000000, 'indice_39')">+500M puntos por click. Coste: 300T</button>
-    <div id="39" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(500000000, 700000000000000, 'indice_40')">+500M puntos por segundo. Coste: 700T</button>
-    <div id="40" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(1000000000, 1500000000000000, 'indice_41')">+1B puntos por click. Coste: 1.5Qa</button>
-    <div id="41" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(1000000000, 3000000000000000, 'indice_42')">+1B puntos por segundo. Coste: 3Qa</button>
-    <div id="42" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(5000000000, 7000000000000000, 'indice_43')">+5B puntos por click. Coste: 7Qa</button>
-    <div id="43" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(5000000000, 15000000000000000, 'indice_44')">+5B puntos por segundo. Coste: 15Qa</button>
-    <div id="44" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(10000000000, 30000000000000000, 'indice_45')">+10B puntos por click. Coste: 30Qa</button>
-    <div id="45" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(10000000000, 60000000000000000, 'indice_46')">+10B puntos por segundo. Coste: 60Qa</button>
-    <div id="46" class="cantidad"></div>
-</div>
-
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorClick(50000000000, 120000000000000000, 'indice_47')">+50B puntos por click. Coste: 120Qa</button>
-    <div id="47" class="cantidad"></div>
-</div>
-<div class="fila">
-    <button class="mejora" onclick="sumarPuntosPorSegundo(50000000000, 250000000000000000, 'indice_48')">+50B puntos por segundo. Coste: 250Qa</button>
-    <div id="48" class="cantidad"></div>
-</div>
-</div>
-<button onclick="reiniciarTodoElJuego()" id="reiniciar">Reiniciar Partida</button>
-<button onclick="ascender()"  id="ascender">Ascender</button>
 <script>
-    let puntos = 0;
-    let puntos_totales=0;
-    let puntos_por_click = 1;
-    let puntos_por_segundo = 0;
-    let intervaloSegundos;
-    let multiplicador = 1;
-    const TOTAL_INDICES = 48;
-    const UMBRAL_PRESTIGIO = 10000000;
+let puntos = 0;
+let puntos_totales = 0;
+let puntos_por_click = 1;
+let puntos_por_segundo = 0;
+let multiplicador = 1;
 
-    const elementoPuntos = document.getElementById("Puntos");
-    const puntosPorClick = document.getElementById("PuntosPorClick");
-    const puntosPorSegundo = document.getElementById("PuntosPorSegundo");
-    const puntosTotales = document.getElementById("PuntosTotales");
-    const elementoMultiplicador = document.getElementById("Multiplicador");
+const TOTAL_INDICES = 448;
+const UMBRAL_PRESTIGIO = 10000000;
 
-    const indices = {};
-    for (let i = 1; i <= TOTAL_INDICES; i++) {
-        const clave = 'indice_' + i;
-        let elemento = document.getElementById(i.toString());
-        if (elemento) {
-            indices[clave] = elemento;
-            indices[clave].textContent = 0;
-        }
+const indices = {};
+
+function formatearNumero(num) {
+    const sufijos = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
+    let i = 0;
+    while (num >= 1000 && i < sufijos.length - 1) {
+        num /= 1000;
+        i++;
     }
+    return num.toFixed(2) + " " + sufijos[i];
+}
 
+function recargar() {
+    Puntos.textContent = "Puntos: " + formatearNumero(puntos);
+    PuntosPorClick.textContent = "Puntos por click: " + formatearNumero(puntos_por_click);
+    PuntosPorSegundo.textContent = "Puntos por segundo: " + formatearNumero(puntos_por_segundo);
+    PuntosTotales.textContent = "Puntos totales: " + formatearNumero(puntos_totales);
+    Multiplicador.textContent = "Multiplicador: " + multiplicador.toFixed(2) + "x";
+}
 
-    function recargar() {
-        if (elementoPuntos) {
-            let puntosTexto = puntos >= 1e9 ? (puntos / 1e9).toFixed(2) + ' B' :
-                puntos >= 1e6 ? (puntos / 1e6).toFixed(2) + ' M' :
-                    puntos.toLocaleString('es-ES');
-
-            elementoPuntos.textContent = `Puntos: ${puntosTexto}`;
-        }
-        if (puntosPorClick) {
-            puntosPorClick.textContent = `Puntos por click: ${puntos_por_click.toLocaleString('es-ES')}`;
-        }
-        if (puntosPorSegundo) {
-            puntosPorSegundo.textContent = `Puntos por segundo: ${puntos_por_segundo.toLocaleString('es-ES')}`;
-        }
-        if (puntosTotales) {
-            puntosTotales.textContent = `Puntos totales: ${puntos_totales.toLocaleString('es-ES')}`;
-        }
-        if (elementoMultiplicador) {
-            // Muestra el multiplicador redondeado a 2 decimales
-            elementoMultiplicador.textContent = `Multiplicador: ${multiplicador.toFixed(2)}x`;
-        }
-    }
-
-
-    function ascender() {
-        if (puntos_totales < UMBRAL_PRESTIGIO) {
-            alert(`Necesitas al menos ${UMBRAL_PRESTIGIO.toLocaleString('es-ES')} Puntos Totales para ascender.`);
-            return;
-        }
-
-
-        let nuevaGanancia = puntos_totales / UMBRAL_PRESTIGIO;
-
-        if (nuevaGanancia < 1) {
-            alert("Sigue jugando. El ascenso no te daría un multiplicador significativo.");
-            return;
-        }
-
-        if (!confirm(`¿Deseas ascender? Perderás todo el progreso de la partida actual, pero ganarás ${nuevaGanancia} puntos de multiplicador.`)) {
-            return;
-        }
-
-        multiplicador += nuevaGanancia;
-
-        puntos = 0;
-        puntos_por_click = 1;
-        puntos_por_segundo = 0;
-        puntos_totales=0;
-
-        for (const clave in indices) {
-            if (indices[clave]) {
-                indices[clave].textContent = 0;
-            }
-        }
-
-        guardarPartida();
-        recargar();
-        alert(`¡Ascensión exitosa! Tu nuevo multiplicador es ${multiplicador.toFixed(2)}x.`);
-    }
-
-
-    function guardarPartida() {
-        localStorage.setItem("juegoPuntos", puntos.toString());
-        localStorage.setItem("juegoPuntosPorSegundo", puntos_por_segundo.toString());
-        localStorage.setItem("juegoPuntosPorClick", puntos_por_click.toString());
-        localStorage.setItem("juegoPuntosTotales", puntos_totales.toString());
-        localStorage.setItem("multiplicador", multiplicador.toString());
-
-        for (let i = 1; i <= TOTAL_INDICES; i++) {
-            const clave = 'indice_' + i;
-            if (indices[clave]) {
-                localStorage.setItem("juego" + clave, indices[clave].textContent);
-            }
-        }
-    }
-
-    function cargarPartida() {
-        let puntosGuardados = localStorage.getItem("juegoPuntos");
-        let puntosPorSegundoGuardados = localStorage.getItem("juegoPuntosPorSegundo");
-        let puntosPorClickGuardados = localStorage.getItem("juegoPuntosPorClick");
-        let puntosTotalesGuardados = localStorage.getItem("juegoPuntosTotales");
-        let multiplicadorGuardados=localStorage.getItem("multiplicador");
-
-        if (puntosGuardados !== null) {
-            puntos = parseInt(puntosGuardados, 10);
-        }
-        if (puntosPorSegundoGuardados !== null) {
-            puntos_por_segundo = parseInt(puntosPorSegundoGuardados, 10);
-        }
-        if (puntosPorClickGuardados !== null) {
-            puntos_por_click = parseInt(puntosPorClickGuardados, 10);
-        }
-        if (puntosTotalesGuardados !== null) {
-            puntos_totales = parseInt(puntosTotalesGuardados, 10);
-        }
-        if (multiplicadorGuardados !== null) {
-            // Se debe parsear como flotante (parseFloat) ya que los multiplicadores no son enteros.
-            multiplicador = parseFloat(multiplicadorGuardados);
-        }
-
-        for (let i = 1; i <= TOTAL_INDICES; i++) {
-            const clave = 'indice_' + i;
-            let valorGuardado = localStorage.getItem("juego" + clave);
-
-            if (valorGuardado !== null && indices[clave]) {
-                indices[clave].textContent = valorGuardado;
-            }
-        }
-    }
-
-    cargarPartida();
-
-    function reiniciarTodoElJuego() {
-        if (!confirm("¿Estás seguro de que quieres REINICIAR el juego? Se perderá todo el progreso guardado.")) {
-            return;
-        }
-        localStorage.clear();
-
-        puntos = 0;
-        puntos_por_click = 1;
-        puntos_por_segundo = 0;
-        puntos_totales=0;
-        multiplicador = 1; // Reiniciar el multiplicador también
-
-        for (const clave in indices) {
-            if (indices[clave]) {
-                indices[clave].textContent = 0;
-            }
-        }
-
-        recargar();
-        alert("¡Partida reiniciada! Se ha borrado el guardado local.");
-    }
-
-    function iniciarPuntosPorSegundo() {
-        intervaloSegundos = setInterval(function() {
-            if (puntos_por_segundo > 0) {
-
-                let ganancia = Math.floor(puntos_por_segundo * multiplicador);
-                puntos += ganancia;
-                puntos_totales += ganancia;
-                recargar();
-                guardarPartida();
-            }
-        }, 1000);
-    }
-    iniciarPuntosPorSegundo();
-
+function hacerClick() {
+    let g = Math.floor(puntos_por_click * multiplicador);
+    puntos += g;
+    puntos_totales += g;
+    guardar();
     recargar();
+}
 
-    function hacerClick() {
+setInterval(() => {
+    let g = Math.floor(puntos_por_segundo * multiplicador);
+    puntos += g;
+    puntos_totales += g;
+    guardar();
+    recargar();
+}, 1000);
 
-        let ganancia = Math.floor(puntos_por_click * multiplicador);
-        puntos += ganancia;
-        puntos_totales += ganancia;
+function sumarPuntosPorClick(p, c, i) {
+    if (puntos >= c) {
+        puntos -= c;
+        puntos_por_click += p;
+        indices[i]++;
+        guardar();
         recargar();
-        guardarPartida();
     }
+}
 
-    function sumarPuntosPorClick(Puntos, Coste, indice) {
-        if (puntos >= Coste) {
-            puntos_por_click += Puntos;
-            puntos -= Coste;
+function sumarPuntosPorSegundo(p, c, i) {
+    if (puntos >= c) {
+        puntos -= c;
+        puntos_por_segundo += p;
+        indices[i]++;
+        guardar();
+        recargar();
+    }
+}
 
-            indices[indice].textContent = (parseInt(indices[indice].textContent, 10) + 1).toString();
+function generarMejoras() {
+    let cont = document.getElementById("contenedorMejoras");
 
-            recargar();
-            guardarPartida();
+    for (let i = 1; i <= TOTAL_INDICES; i++) {
+        let esClick = i % 2;
+        let nivel = Math.floor(i / 2);
+
+        let ganancia = Math.floor(Math.pow(1.7, nivel));
+        let coste = Math.floor(50 * Math.pow(2.15, nivel));
+
+        indices["i"+i] = 0;
+
+        let fila = document.createElement("div");
+        fila.className = "fila";
+
+        let btn = document.createElement("button");
+        btn.className = "mejora";
+
+        if (esClick) {
+            btn.textContent = "+"+formatearNumero(ganancia)+" click ("+formatearNumero(coste)+")";
+            btn.onclick = () => sumarPuntosPorClick(ganancia, coste, "i"+i);
         } else {
-            alert("Puntos insuficientes");
+            btn.textContent = "+"+formatearNumero(ganancia)+" /s ("+formatearNumero(coste)+")";
+            btn.onclick = () => sumarPuntosPorSegundo(ganancia, coste, "i"+i);
         }
+
+        let cant = document.createElement("div");
+        cant.className = "cantidad";
+        cant.id = "c"+i;
+        cant.textContent = 0;
+
+        fila.appendChild(btn);
+        fila.appendChild(cant);
+        cont.appendChild(fila);
     }
+}
 
-    function sumarPuntosPorSegundo(Puntos, Coste, indice) {
-        if (puntos >= Coste) {
-            puntos_por_segundo += Puntos;
-            puntos -= Coste;
+function guardar() {
+    localStorage.setItem("save", JSON.stringify({
+        puntos, puntos_totales, puntos_por_click, puntos_por_segundo, multiplicador, indices
+    }));
+}
 
-            indices[indice].textContent = (parseInt(indices[indice].textContent, 10) + 1).toString();
+function cargar() {
+    let s = localStorage.getItem("save");
+    if (!s) return;
+    let data = JSON.parse(s);
 
-            recargar();
-            guardarPartida();
-        } else {
-            alert("Puntos insuficientes");
-        }
-    }
+    puntos = data.puntos;
+    puntos_totales = data.puntos_totales;
+    puntos_por_click = data.puntos_por_click;
+    puntos_por_segundo = data.puntos_por_segundo;
+    multiplicador = data.multiplicador;
+    Object.assign(indices, data.indices);
+}
+
+function reiniciar() {
+    localStorage.clear();
+    location.reload();
+}
+
+function ascender() {
+    if (puntos_totales < UMBRAL_PRESTIGIO) return alert("No suficiente");
+
+    let bonus = puntos_totales / UMBRAL_PRESTIGIO;
+    multiplicador += bonus;
+
+    puntos = 0;
+    puntos_totales = 0;
+    puntos_por_click = 1;
+    puntos_por_segundo = 0;
+
+    guardar();
+    recargar();
+}
+
+generarMejoras();
+cargar();
+recargar();
 </script>
+
 </body>
 </html>
